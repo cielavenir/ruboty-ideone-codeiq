@@ -6,7 +6,7 @@ require 'cgi'
 #クラス変数を使いたいので、Actionを切り出すことは不可能
 module Ruboty
 	module Handlers
-		class Ideone-codeiq < Base
+		class Ideone_codeiq < Base
 			#基本的にruboty-ideoneの古いバージョンから拾ってくれば大丈夫。念のためソース開いて照合を。
 			LANGUAGES=[
 	{:key=>"7", :value=>"Ada (gnat-4.9.2)"},
