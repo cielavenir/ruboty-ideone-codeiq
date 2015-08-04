@@ -128,7 +128,7 @@ module Ruboty
 				https=Net::HTTP.new(uri.host,uri.port)
 				https.use_ssl=true
 				https.start{
-					resp=http.post(uri.path,'lang='+lang.to_s+'&source='+CGI.escape(read_uri(message[:source_uri]))+'&input='+CGI.escape(input),{
+					resp=https.post(uri.path,'lang='+lang.to_s+'&source='+CGI.escape(read_uri(message[:source_uri]))+'&input='+CGI.escape(input),{
 						'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8',
 					})
 					json=JSON.parse(resp.body)
