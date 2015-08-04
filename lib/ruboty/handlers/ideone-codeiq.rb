@@ -131,11 +131,27 @@ module Ruboty
 					resp=https.post(uri.path,'lang='+lang.to_s+'&source='+CGI.escape(read_uri(message[:source_uri]))+'&input='+CGI.escape(input),{
 						'Content-Type'=>'application/x-www-form-urlencoded; charset=UTF-8',
 					})
-					json=JSON.parse(resp.body)
-					if json['error']!='OK'
-						message.reply '[Ruboty::Ideone::CodeIQ] '+json['error']
+					result=JSON.parse(resp.body)
+					if result['status'].to_i<0
+						message.reply '[Ruboty::Ideone::CodeIQ] waiting for compilation'
+					elsif result['status'].to_i==1
+						message.reply '[Ruboty::Ideone::CodeIQ] compiling'
+					elsif result['status'].to_i==3
+						message.reply '[Ruboty::Ideone::CodeIQ] running'
+					elsif result['error']!='OK'
+						message.reply '[Ruboty::Ideone::CodeIQ] something wrong happened in execution'
+					elsif result['result']=='15'
+						message.reply result['output']
 					else
-						message.reply json['output']
+						message.reply('[Ruboty::Ideone::CodeIQ] '+[
+							0=>'not running',
+							11=>'compilation error',
+							12=>'runtime error',
+							13=>'time limit exceeded',
+							17=>'memory limit exceeded',
+							19=>'illegal system call',
+							20=>'internal error',
+						][result['result'].to_i])
 					end
 				}
 			end
