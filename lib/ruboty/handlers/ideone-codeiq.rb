@@ -140,7 +140,7 @@ module Ruboty
 						message.reply '[Ruboty::Ideone::CodeIQ] running'
 					elsif result['error']!='OK'
 						message.reply '[Ruboty::Ideone::CodeIQ] something wrong happened in execution'
-					elsif result['result']=='15'
+					elsif result['result'].to_i==15
 						message.reply result['output']
 					else
 						message.reply('[Ruboty::Ideone::CodeIQ] '+{
